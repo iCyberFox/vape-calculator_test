@@ -1,0 +1,109 @@
+﻿<!DOCTYPE html>
+<html lang="uk">
+<head>    
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">  
+<title>Калькулятор вейп-рідини</title>
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<link rel="manifest" href="../manifest.json">
+<meta name="theme-color" content="#3498db">
+<link rel="stylesheet" href="FlavorCalculator.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+<h1>Калькулятор<br>вейп-рідини</h1>
+<div class="action-buttons">
+    <button id="saveRecipeBtn" class="btn-save" type="button">Зберегти рецепт</button>
+    <button id="viewRecipesBtn" class="btn-recipes" type="button">Рецепти</button>
+</div>
+<div class="calculator">
+    <div class="form-group">
+        <label for="totalVolume">Загальний об'єм рідини (мл):</label>
+        <input type="number" id="totalVolume" min="1" step="1" value="20">
+    </div>
+
+    <div class="form-row">
+        <div class="form-col">
+            <label for="baseType">Тип бази VG/PG:</label>
+            <select id="baseType">
+                <option value="50/50">50/50</option>
+                <option value="60/40">60/40</option>
+                <option value="70/30" selected>70/30</option>
+                <option value="65/35">65/35</option>
+            </select>
+        </div>
+        <div class="form-col">
+            <label for="nicotineStrength">Нікотин (мг/мл):</label>
+            <select id="nicotineStrength">
+                <option value="0">0</option>
+                <option value="3" selected>3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>Ароматизатори:</label>
+        <div id="flavorsContainer"></div>
+        <button type="button" class="btn-add" onclick="addFlavor()">+ Додати ароматизатор</button>
+    </div>
+
+    <button type="button" onclick="calculate()">Розрахувати</button>
+
+    <div id="result" class="result">
+        <h3>Результати:</h3>
+        <p id="baseResult"></p>
+        <p id="flavorsResult"></p>
+        <p id="finalRatio"></p>
+        <p id="nicotineResult" class="nicotine-result"></p>
+        <p id="vgWarning"></p>
+    </div>
+
+    <div class="copyright">
+    By <a href="https://t.me/BMWeast523" target="_blank" rel="noopener noreferrer">
+        <i class="fab fa-telegram"></i> <strong>BMWeast</strong>
+    </a>
+</div>
+</div>
+
+<div id="saveModal" class="modal-overlay hidden">
+    <div class="modal">
+        <div class="modal-header">
+            <h2>Зберегти рецепт</h2>
+            <button id="closeSaveModal" class="modal-close" type="button">×</button>
+        </div>
+        <label>Назва рецепту
+            <input id="recipeName" type="text" placeholder="Назва рецепту">
+        </label>
+        <label>Короткий опис
+            <textarea id="recipeDesc" rows="4" placeholder="Опишіть рецепт"></textarea>
+        </label>
+        <button id="saveRecipeConfirm" type="button">Зберегти</button>
+    </div>
+</div>
+
+<div id="recipesModal" class="modal-overlay hidden">
+    <div class="modal">
+        <div class="modal-header">
+            <h2>Збережені рецепти</h2>
+            <button id="closeRecipesModal" class="modal-close" type="button">×</button>
+        </div>
+        <div id="recipesList" class="recipes-list"></div>
+        <p id="noRecipesMessage" class="empty-message">Поки немає збережених рецептів.</p>
+    </div>
+</div>
+
+<script src="FlavorCalculator.js"></script>
+<script>
+    if ('serviceWorker' in navigator && (window.location.protocol === 'https:' || window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('../service-worker.js')
+                .then(reg => console.log('Service worker registered:', reg.scope))
+                .catch(err => console.warn('SW registration failed:', err));
+        });
+    }
+</script>
+</body>
+</html>
