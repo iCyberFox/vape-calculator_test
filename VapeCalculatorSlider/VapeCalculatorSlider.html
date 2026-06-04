@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Калькулятор змішування основ</title>
-  <link rel="icon" type="image/svg+xml" href="favicon.svg">
-  
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="manifest" href="../manifest.json">
   <link rel="stylesheet" href="VapeCalculatorSlider.css">
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -13,6 +13,7 @@
 <body>
   <div class="container">
     <h2>Калькулятор змішування основ</h2>
+    <button class="btn-back" onclick="window.location.href='../index.html'" style="margin-top: 10px; margin-bottom: 20px; display: block; margin-left: auto; margin-right: auto; background-color: #7f8c8d; padding: 10px 20px; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; transition: background-color 0.3s;">← Повернутися на головну</button>
 
     <label>Обʼєм бази №1 (мл):</label>
     <input type="number" id="volume1" value="30">
@@ -75,6 +76,14 @@
     </div>
   </div>
 <script src="VapeCalculatorSlider.js"></script>
-
+<script>
+    if ('serviceWorker' in navigator && (window.location.protocol === 'https:' || window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('../service-worker.js')
+                .then(reg => console.log('Service worker registered:', reg.scope))
+                .catch(err => console.warn('SW registration failed:', err));
+        });
+    }
+</script>
 </body>
 </html>
